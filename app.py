@@ -5,7 +5,6 @@ import os  # 🔥 WE NEED THIS FOR ENV VARIABLES
 
 intents = discord.Intents.default()
 intents.guilds = True
-intents.manage_roles = True
 intents.members = True
 
 bot = commands.Bot(command_prefix="!", intents=intents)
