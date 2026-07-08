@@ -1,8 +1,8 @@
 import discord
 from discord.ext import commands
 from discord import app_commands
+import os  # 🔥 WE NEED THIS FOR ENV VARIABLES
 
-# Critical intents to see members and manage roles
 intents = discord.Intents.default()
 intents.guilds = True
 intents.manage_roles = True
@@ -25,10 +25,7 @@ async def on_ready():
 async def create_role(interaction: discord.Interaction, name: str):
     guild = interaction.guild
     
-    # Baseline: Zero power
     chat_only_perms = discord.Permissions.none()
-    
-    # Add survival essentials ONLY
     chat_only_perms.view_channel = True
     chat_only_perms.send_messages = True
     chat_only_perms.read_message_history = True
@@ -40,11 +37,12 @@ async def create_role(interaction: discord.Interaction, name: str):
             color=discord.Color.dark_theme(),
             reason=f"FORB1D🔥 Role generated via /role command"
         )
-        await interaction.response.send_message(f"🔥 MASSIVE W! The **{new_role.name}** role was created with locked-down chat perms.")
+        await interaction.response.send_message(f"🔥 MASSIVE W! The **{new_role.name}** role was created.")
         print(f"✅ Created role '{new_role.name}'")
         
     except discord.Forbidden:
-        await interaction.response.send_message("❌ My bot role isn't high enough! Move me up in server settings.", ephemeral=True)
+        await interaction.response.send_message("❌ My bot role isn't high enough! Move me up in settings.", ephemeral=True)
 
-# PASTE YOUR SECRET TOKEN HERE
-bot.run('MTUyNDM0MTgwODI3MDkzNDAyNg.GjDWhs.uTaq6JTWqhTMwsfdqPDZALN8LhULCCSorSRpas')
+# 🛑 PULLS THE TOKEN FROM RENDER INSTEAD OF THE FILE 🛑
+TOKEN = os.getenv('DISCORD_TOKEN')
+bot.run(TOKEN)
